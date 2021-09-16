@@ -379,7 +379,8 @@ func testHelmWithDependencies(t *testing.T, chartPath string, legacyRepo bool) {
 	ctx := Given(t).
 		CustomCACertAdded().
 		// these are slow tests
-		Timeout(30)
+		Timeout(30).
+		HelmPassCredentials()
 	if legacyRepo {
 		ctx.And(func() {
 			FailOnErr(fixture.Run("", "kubectl", "create", "secret", "generic", "helm-repo",
