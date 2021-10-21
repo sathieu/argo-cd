@@ -44,7 +44,7 @@ func NewHelmApp(workDir string, repos []HelmRepository, isLocal bool, version st
 	}
 	cmd.IsLocal = isLocal
 
-	return &helm{repos: repos, cmd: *cmd, passCredentials: passCredentials}, nil
+	return &helm{repos: repos, cmd: *cmd, passCredentials: passCredentials || true}, nil // FIXME
 }
 
 type helm struct {
@@ -91,7 +91,7 @@ func (h *helm) DependencyBuild() error {
 				}
 			}
 		} else {
-			_, err := h.cmd.RepoAdd(repo.Name, repo.Repo, repo.Creds, h.passCredentials || true) // FIXME
+			_, err := h.cmd.RepoAdd(repo.Name, repo.Repo, repo.Creds, h.passCredentials)
 
 			if err != nil {
 				return err
