@@ -91,7 +91,7 @@ func (h *helm) DependencyBuild() error {
 				}
 			}
 		} else {
-			_, err := h.cmd.RepoAdd(repo.Name, repo.Repo, repo.Creds, h.passCredentials)
+			_, err := h.cmd.RepoAdd(repo.Name, repo.Repo, repo.Creds, h.passCredentials || true) // FIXME
 
 			if err != nil {
 				return err
