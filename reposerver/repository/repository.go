@@ -633,6 +633,8 @@ func helmTemplate(appPath string, repoRoot string, env *v1alpha1.Env, q *apiclie
 			templateOpts.SetFile[p.Name] = p.Path
 		}
 		passCredentials = appHelm.PassCredentials
+	} else {
+		passCredentials = true // FIXME
 	}
 	if templateOpts.Name == "" {
 		templateOpts.Name = q.AppName
@@ -672,7 +674,7 @@ func helmTemplate(appPath string, repoRoot string, env *v1alpha1.Env, q *apiclie
 		proxy = q.Repo.Proxy
 	}
 
-	h, err := helm.NewHelmApp(appPath, getHelmRepos(q.Repos), isLocal, version, proxy, passCredentials || true) // FIXME
+	h, err := helm.NewHelmApp(appPath, getHelmRepos(q.Repos), isLocal, version, proxy, passCredentials)
 	if err != nil {
 		return nil, err
 	}
