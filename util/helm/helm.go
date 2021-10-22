@@ -44,7 +44,7 @@ func NewHelmApp(workDir string, repos []HelmRepository, isLocal bool, version st
 	}
 	cmd.IsLocal = isLocal
 
-	return &helm{repos: repos, cmd: *cmd, passCredentials: passCredentials || true}, nil // FIXME
+	return &helm{repos: repos, cmd: *cmd, passCredentials: passCredentials}, nil
 }
 
 type helm struct {
