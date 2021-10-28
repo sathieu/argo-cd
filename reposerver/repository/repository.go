@@ -325,6 +325,9 @@ func (s *Service) GenerateManifest(ctx context.Context, q *apiclient.ManifestReq
 func (s *Service) runManifestGen(repoRoot, commitSHA, cacheKey string, ctxSrc operationContextSrc, q *apiclient.ManifestRequest) (*apiclient.ManifestResponse, error) {
 	var manifestGenResult *apiclient.ManifestResponse
 	ctx, err := ctxSrc()
+	if q.ApplicationSource.Helm != nil {
+		q.ApplicationSource.Helm.PassCredentials = true
+	}
 	if err == nil {
 		manifestGenResult, err = GenerateManifests(ctx.appPath, repoRoot, commitSHA, q, false)
 	}
@@ -633,8 +636,6 @@ func helmTemplate(appPath string, repoRoot string, env *v1alpha1.Env, q *apiclie
 			templateOpts.SetFile[p.Name] = p.Path
 		}
 		passCredentials = appHelm.PassCredentials
-	} else {
-		passCredentials = true // FIXME
 	}
 	if templateOpts.Name == "" {
 		templateOpts.Name = q.AppName
