@@ -358,6 +358,7 @@ func TestHelmWithMultipleDependencies(t *testing.T) {
 		// these are slow tests
 		Timeout(30).
 		HelmHTTPSCredentialsUserPassAdded().
+		HelmPassCredentials().
 		When().
 		Create().
 		Sync().
